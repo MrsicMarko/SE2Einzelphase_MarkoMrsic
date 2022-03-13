@@ -30,9 +30,16 @@ public class MainActivity extends AppCompatActivity {
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                String matNr = inputMatNr.getText().toString();
+                SimpleThread t = new SimpleThread(matNr, serverAnswer);
+                t.start();
+                try {
+                    t.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                serverAnswer.setText(t.get());
             }
         });
-
     }
 }
